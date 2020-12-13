@@ -1,1 +1,3 @@
-worst-game
+*.o
+*.so
+*-game

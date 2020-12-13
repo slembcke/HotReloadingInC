@@ -1,11 +1,10 @@
-#include <stdlib.h>
 #include <ncurses.h>
 
-static const int number = 7;
+#include "module.h"
 
-int main(void){
-	initscr();
-	
+int NUMBER = 7;
+
+ModuleStatus game_loop(void){
 	printw("Welcome to the worst guessing game ever!\n");
 	while(1){
 		printw("Guess my number (0-9): ");
@@ -14,21 +13,24 @@ int main(void){
 		int c = getch(); printw("\n");
 		unsigned n = c - '0';
 		
-		if(n == number){
+		if(n == NUMBER){
 			printw("You guessed the number!\n");
 			printw("Please change the hardcoded number in the code and recompile to play again!\n");
 			printw("Press almost any key to quit!\n");
 			
 			getch();
-			break;
+			return MODULE_EXIT;
 		} else if(n <= 9){
-			const char* hi_lo = (n < number ? "too low" : "too high");
+			const char* hi_lo = (n < NUMBER ? "too low" : "too high");
 			printw("You guessed the number %d, which is %s.\n", n, hi_lo);
 		} else {
 			printw("That was not a number. Please concentrate this time.\n");
 		}
 	}
 	
-	endwin();
-	return EXIT_SUCCESS;
+	return MODULE_EXIT;
+}
+
+ModuleStatus module_init(void){
+	return game_loop();
 }
