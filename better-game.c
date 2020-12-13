@@ -25,15 +25,15 @@ int main(void){
 		}
 		
 		typedef ModuleStatus module_func(void);
-		module_func* func = dlsym(module, "module_init");
-		if(func == NULL){
-			fprintf(stderr, "Failed to find module_init(). (%s)\n", dlerror());
+		module_func* game_loop = dlsym(module, "module_loop");
+		if(game_loop == NULL){
+			fprintf(stderr, "Failed to find module_loop(). (%s)\n", dlerror());
 			abort();
 		}
 		
 		initscr();
 		clear();
-		if(func() == MODULE_EXIT) break;
+		if(game_loop() == MODULE_EXIT) break;
 		endwin();
 		
 		if(dlclose(module) != 0){
