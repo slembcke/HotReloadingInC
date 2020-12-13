@@ -1,4 +1,5 @@
 LDLIBS += -ldl -lncurses
 
-worst-game: worst-game.c
-	# $(CC) -o $@ $^ $(LDLIBS)
+worst-game: $(@:=.o)
+
+better-game: $(@:=.o)
