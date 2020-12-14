@@ -10,30 +10,29 @@
 
 
 int main(void){
-	const char* module_name = "./better-game-module.so";
-	
 	while(1){
 		while(system("make better-game-module.so") != 0){
 			fprintf(stderr, "Whoops! Failed to compile!\n");
-			gets();
+			fprintf(stderr, "Press return to try again.\n");
+			getchar();
 		}
 		
-		void* module = dlopen(module_name, RTLD_NOW);
-		if(module == NULL){
+		void* module;
+		while((module = dlopen("./better-game-module.so", RTLD_NOW)) == NULL){
 			fprintf(stderr, "Failed to load module. (%s)\n", dlerror());
-			abort();
+			fprintf(stderr, "Press return to try again.\n");
+			getchar();
 		}
 		
-		typedef ModuleStatus module_func(void);
-		module_func* game_loop = dlsym(module, "module_loop");
-		if(game_loop == NULL){
-			fprintf(stderr, "Failed to find module_loop(). (%s)\n", dlerror());
+		module_func* module_main = dlsym(module, "module_main");
+		if(module_main == NULL){
+			fprintf(stderr, "Failed to find module_main(). (%s)\n", dlerror());
 			abort();
 		}
 		
 		initscr();
 		clear();
-		if(game_loop() == MODULE_EXIT) break;
+		if(module_main() == MODULE_EXIT) break;
 		endwin();
 		
 		if(dlclose(module) != 0){

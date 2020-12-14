@@ -4,7 +4,7 @@
 
 static const int NUMBER = 7;
 
-ModuleStatus module_loop(void){
+ModuleStatus module_main(void){
 	printw("Welcome to a better guessing game.\n");
 	while(1){
 		printw("Guess my number (0-9): ");

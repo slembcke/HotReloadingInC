@@ -20,7 +20,7 @@ int main(void){
 			printw("Press almost any key to quit!\n");
 			
 			getch();
-			break;
+			return EXIT_SUCCESS;
 		} else if(n <= 9){
 			const char* hi_lo = (n < number ? "too low" : "too high");
 			printw("You guessed the number %d, which is %s.\n", n, hi_lo);
@@ -29,6 +29,5 @@ int main(void){
 		}
 	}
 	
-	endwin();
 	return EXIT_SUCCESS;
 }
