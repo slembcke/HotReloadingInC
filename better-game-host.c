@@ -6,9 +6,6 @@
 #include <ncurses.h>
 #include <dlfcn.h>
 
-#include "better-game.h"
-
-
 int main(void){
 	void* state = NULL;
 	
@@ -34,7 +31,8 @@ int main(void){
 		initscr();
 		clear();
 		
-		module_func* module_main = dlsym(module, "module_main");
+		typedef void* module_main_func(void* state);
+		module_main_func* module_main = dlsym(module, "module_main");
 		state = module_main(state);
 		
 		endwin();

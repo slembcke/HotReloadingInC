@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
 
-#include "better-game.h"
-
 static const int NUMBER = 7;
 
 typedef struct {
