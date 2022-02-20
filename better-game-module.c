@@ -12,9 +12,11 @@ typedef struct {
 void* module_main(void* saved_state){
 	GameState* game_state = saved_state;
 	if(game_state == NULL){
+		// If the previous state is NULL, we know the app has just started.
 		game_state = calloc(1, sizeof(*game_state));
 		printw("Welcome to the better number guessing game.\n");
 	} else {
+		// When the previous state is not NULL, we know we can continue where we left off.
 		printw("Welcome back!\nLast time the number was %d\n", game_state->last_number);
 	}
 	
@@ -32,6 +34,7 @@ void* module_main(void* saved_state){
 			
 			getch();
 			game_state->last_number = NUMBER;
+			// Return the current state.
 			return game_state;
 		} else if(n <= 9){
 			const char* hi_lo = (n < NUMBER ? "too low" : "too high");
@@ -41,5 +44,6 @@ void* module_main(void* saved_state){
 		}
 	}
 	
+	// Returning NULL tells the hot-load loop to just exit the application instead.
 	return NULL;
 }
